@@ -1,7 +1,7 @@
 {
 	"name": "pip2_cp_data_multiple_blob",
 	"properties": {
-		"description": "Copy multiple files from input container to output container",
+		"description": "Copy multiple files from input container to the output container",
 		"activities": [
 			{
 				"name": "Get Metadata1",
