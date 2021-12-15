@@ -1,0 +1,21 @@
+{
+	"name": "write_csv_files",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TrainingBitwiseBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "file-output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
