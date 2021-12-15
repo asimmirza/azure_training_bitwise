@@ -1,0 +1,9 @@
+{
+	"name": "training-bitwise-pipeline",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "566f25ed-64da-4cc2-9398-6086abe98993",
+		"tenantId": "04b7bc7c-bd3d-4bef-a051-4307dd381602"
+	}
+}
