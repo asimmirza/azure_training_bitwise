@@ -1,0 +1,6 @@
+{
+	"name": "SelfHostedAsimPC",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
