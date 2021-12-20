@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "training-bitwise-pipeline"
+		},
+		"SqlServerOnPrem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServerOnPrem'"
+		},
+		"SqlServerOnPrem_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServerOnPrem'"
+		},
+		"TrainingBitwiseBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TrainingBitwiseBlobStorage'"
+		},
+		"SqlServerOnPrem_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Asim"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "training-bitwise-pipeline_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"TrainingBitwiseBlobStorage_connectionString": {
+						"value": "[parameters('TrainingBitwiseBlobStorage_connectionString')]"
+					},
+					"SqlServerOnPrem_connectionString": {
+						"value": "[parameters('SqlServerOnPrem_connectionString')]"
+					},
+					"SqlServerOnPrem_password": {
+						"value": "[parameters('SqlServerOnPrem_password')]"
+					},
+					"SqlServerOnPrem_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServerOnPrem_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

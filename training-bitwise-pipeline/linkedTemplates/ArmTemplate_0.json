@@ -1,0 +1,703 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "training-bitwise-pipeline"
+		},
+		"TrainingBitwiseBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'TrainingBitwiseBlobStorage'"
+		},
+		"SqlServerOnPrem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SqlServerOnPrem'"
+		},
+		"SqlServerOnPrem_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServerOnPrem'"
+		},
+		"SqlServerOnPrem_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Asim"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/TrainingBitwiseBlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('TrainingBitwiseBlobStorage_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SelfHostedAsimPC')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/read_csv_file')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "inp_file_1.csv",
+						"container": "file-input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/read_csv_files')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "file-input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/write_csv_file')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "file-output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/write_csv_files')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "file-output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerOnPrem')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('SqlServerOnPrem_connectionString')]",
+					"userName": "[parameters('SqlServerOnPrem_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SqlServerOnPrem_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "SelfHostedAsimPC",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/SelfHostedAsimPC')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/read_status_xlsx')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "processing_status.xlsx",
+						"container": "file-input"
+					}
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/read_emp_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "emp_data.xlsx",
+						"container": "file-input"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "First Name",
+						"type": "String"
+					},
+					{
+						"name": "Last Name",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip1_cp_data_single_blob')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy single file from input container to the output container",
+				"activities": [
+					{
+						"name": "cpdt_file",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "read_csv_file",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "write_csv_file",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/read_csv_file')]",
+				"[concat(variables('factoryId'), '/datasets/write_csv_file')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip2_cp_data_multiple_blob')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy multiple files from the input container to the output container",
+				"activities": [
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "read_csv_files",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "LoopFileName",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Get Metadata1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Get Metadata1').output.childItems",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "cp_data_blob",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"wildcardFileName": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "DelimitedTextSink",
+											"storeSettings": {
+												"type": "AzureBlobStorageWriteSettings"
+											},
+											"formatSettings": {
+												"type": "DelimitedTextWriteSettings",
+												"quoteAllText": true,
+												"fileExtension": ".csv"
+											}
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "read_csv_files",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "write_csv_files",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/read_csv_files')]",
+				"[concat(variables('factoryId'), '/datasets/write_csv_files')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip3_filter_activity_array')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Get File List in Dataset",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "read_csv_files",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "FILTER CSV File",
+						"type": "Filter",
+						"dependsOn": [
+							{
+								"activity": "Wait1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Get File List in Dataset').output.childItems",
+								"type": "Expression"
+							},
+							"condition": {
+								"value": "@endswith(item().name,'csv')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [
+							{
+								"activity": "Get File List in Dataset",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 10
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/read_csv_files')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip4_until_lookup')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Run Until",
+						"type": "Until",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@variables('Until_Flag')",
+								"type": "Expression"
+							},
+							"activities": [
+								{
+									"name": "Wait for 10 seconds",
+									"type": "Wait",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"waitTimeInSeconds": 10
+									}
+								},
+								{
+									"name": "Lookup Excel",
+									"type": "Lookup",
+									"dependsOn": [
+										{
+											"activity": "Wait for 10 seconds",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "ExcelSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": true,
+												"enablePartitionDiscovery": false
+											}
+										},
+										"dataset": {
+											"referenceName": "read_status_xlsx",
+											"type": "DatasetReference",
+											"parameters": {}
+										},
+										"firstRowOnly": false
+									}
+								},
+								{
+									"name": "Filter Status",
+									"type": "Filter",
+									"dependsOn": [
+										{
+											"activity": "Lookup Excel",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"items": {
+											"value": "@activity('Lookup Excel').output.value",
+											"type": "Expression"
+										},
+										"condition": {
+											"value": "@equals(item().Prop_1,'flipdate') ",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Check Current Ststus",
+									"type": "IfCondition",
+									"dependsOn": [
+										{
+											"activity": "Filter Status",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"expression": {
+											"value": "@equals(activity('Filter Status').output.Value[0].Prop_2,'Y')",
+											"type": "Expression"
+										},
+										"ifTrueActivities": [
+											{
+												"name": "Reset Until Flag",
+												"type": "SetVariable",
+												"dependsOn": [],
+												"userProperties": [],
+												"typeProperties": {
+													"variableName": "Until_Flag",
+													"value": true
+												}
+											}
+										]
+									}
+								}
+							],
+							"timeout": "7.00:00:00"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"Until_Flag": {
+						"type": "Boolean",
+						"defaultValue": false
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/read_status_xlsx')]"
+			]
+		}
+	]
+}
