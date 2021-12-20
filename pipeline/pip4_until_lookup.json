@@ -94,7 +94,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(activity('Filter Status').output.Value.Prop_2,'N')",
+									"value": "@equals(activity('Filter Status').output.Value[0].Prop_2,'Y')",
 									"type": "Expression"
 								},
 								"ifTrueActivities": [
