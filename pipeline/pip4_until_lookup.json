@@ -23,8 +23,8 @@
 							}
 						},
 						{
-							"name": "Set variable1",
-							"type": "SetVariable",
+							"name": "Lookup Excel",
+							"type": "Lookup",
 							"dependsOn": [
 								{
 									"activity": "Wait for 10 seconds",
@@ -33,10 +33,82 @@
 									]
 								}
 							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "Until_Flag",
-								"value": false
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"dataset": {
+									"referenceName": "read_status_xlsx",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": false
+							}
+						},
+						{
+							"name": "Filter Status",
+							"type": "Filter",
+							"dependsOn": [
+								{
+									"activity": "Lookup Excel",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@activity('Lookup Excel').output.value",
+									"type": "Expression"
+								},
+								"condition": {
+									"value": "@equals(item().Prop_1,'flipdate') ",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Check Current Ststus",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Filter Status",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@equals(activity('Filter Status').output.Value.Prop_2,'N')",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Reset Until Flag",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "Until_Flag",
+											"value": true
+										}
+									}
+								]
 							}
 						}
 					],
@@ -47,7 +119,7 @@
 		"variables": {
 			"Until_Flag": {
 				"type": "Boolean",
-				"defaultValue": true
+				"defaultValue": false
 			}
 		},
 		"annotations": []

@@ -1,0 +1,30 @@
+{
+	"name": "read_status_xlsx",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TrainingBitwiseBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "processing_status.xlsx",
+				"container": "file-input"
+			}
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
