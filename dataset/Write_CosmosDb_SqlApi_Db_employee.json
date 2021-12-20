@@ -1,0 +1,15 @@
+{
+	"name": "Write_CosmosDb_SqlApi_Db_employee",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "CosmosDb_Emp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "CosmosDbSqlApiCollection",
+		"schema": {},
+		"typeProperties": {
+			"collectionName": "db_emp_dtl"
+		}
+	}
+}
