@@ -1,0 +1,732 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "TrainingBitwiseBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "supercleaned.csv",
+				"container": "file-input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "column_a",
+				"type": "String"
+			},
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "name",
+				"type": "String"
+			},
+			{
+				"name": "country",
+				"type": "String"
+			},
+			{
+				"name": "full_name",
+				"type": "String"
+			},
+			{
+				"name": "birthdate",
+				"type": "String"
+			},
+			{
+				"name": "birthplace",
+				"type": "String"
+			},
+			{
+				"name": "died",
+				"type": "String"
+			},
+			{
+				"name": "date_of_death",
+				"type": "String"
+			},
+			{
+				"name": "age",
+				"type": "String"
+			},
+			{
+				"name": "major_teams",
+				"type": "String"
+			},
+			{
+				"name": "batting_style",
+				"type": "String"
+			},
+			{
+				"name": "bowling_style",
+				"type": "String"
+			},
+			{
+				"name": "other",
+				"type": "String"
+			},
+			{
+				"name": "awards",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_mat",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_inns",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_no",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_runs",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_hs",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_ave",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_bf",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_sr",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_100",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_50",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_4s",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_6s",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_ct",
+				"type": "String"
+			},
+			{
+				"name": "batting_tests_st",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_mat",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_inns",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_no",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_runs",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_hs",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_ave",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_bf",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_sr",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_100",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_50",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_4s",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_6s",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_ct",
+				"type": "String"
+			},
+			{
+				"name": "batting_odis_st",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_mat",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_inns",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_no",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_runs",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_hs",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_ave",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_bf",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_sr",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_100",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_50",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_4s",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_6s",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_ct",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20is_st",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_mat",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_inns",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_no",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_runs",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_hs",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_ave",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_bf",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_sr",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_100",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_50",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_4s",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_6s",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_ct",
+				"type": "String"
+			},
+			{
+				"name": "batting_first_class_st",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_mat",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_inns",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_no",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_runs",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_hs",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_ave",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_bf",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_sr",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_100",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_50",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_4s",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_6s",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_ct",
+				"type": "String"
+			},
+			{
+				"name": "batting_list_a_st",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_mat",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_inns",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_no",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_runs",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_hs",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_ave",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_bf",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_sr",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_100",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_50",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_4s",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_6s",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_ct",
+				"type": "String"
+			},
+			{
+				"name": "batting_t20s_st",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_mat",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_inns",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_balls",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_runs",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_wkts",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_bbi",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_bbm",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_ave",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_econ",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_sr",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_4w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_5w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_tests_10",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_mat",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_inns",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_balls",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_runs",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_wkts",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_bbi",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_bbm",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_ave",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_econ",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_sr",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_4w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_5w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_odis_10",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_mat",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_inns",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_balls",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_runs",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_wkts",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_bbi",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_bbm",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_ave",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_econ",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_sr",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_4w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_5w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20is_10",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_mat",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_inns",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_balls",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_runs",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_wkts",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_bbi",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_bbm",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_ave",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_econ",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_sr",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_4w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_5w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_first_class_10",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_mat",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_inns",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_balls",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_runs",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_wkts",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_bbi",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_bbm",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_ave",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_econ",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_sr",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_4w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_5w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_list_a_10",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_mat",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_inns",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_balls",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_runs",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_wkts",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_bbi",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_bbm",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_ave",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_econ",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_sr",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_4w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_5w",
+				"type": "String"
+			},
+			{
+				"name": "bowling_t20s_10",
+				"type": "String"
+			}
+		]
+	}
+}
