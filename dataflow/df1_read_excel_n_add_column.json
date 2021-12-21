@@ -1,0 +1,32 @@
+{
+	"name": "df1_read_excel_n_add_column",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "read_emp_data",
+						"type": "DatasetReference"
+					},
+					"name": "InpEmployeeExcel"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "write_json_file",
+						"type": "DatasetReference"
+					},
+					"name": "OutJsonFile"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddDateField"
+				}
+			],
+			"script": "source(output(\n\t\tID as integer,\n\t\t{First Name} as string,\n\t\t{Last Name} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> InpEmployeeExcel\nInpEmployeeExcel derive({Process Date} = currentDate()) ~> AddDateField\nAddDateField sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> OutJsonFile"
+		}
+	}
+}
