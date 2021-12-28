@@ -49,6 +49,11 @@
 				]
 			}
 		],
+		"parameters": {
+			"Table-Name": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }

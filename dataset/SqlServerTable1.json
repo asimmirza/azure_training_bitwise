@@ -30,7 +30,10 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "CUST_DTL"
+			"table": {
+				"value": "@pipeline().parameters.Table-Name",
+				"type": "Expression"
+			}
 		}
 	}
 }
