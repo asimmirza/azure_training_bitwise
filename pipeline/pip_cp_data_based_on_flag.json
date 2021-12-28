@@ -1,0 +1,85 @@
+{
+	"name": "pip_cp_data_based_on_flag",
+	"properties": {
+		"activities": [
+			{
+				"name": "Read Table List data",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzureSqlTable2",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Filter flag Y",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "Read Table List data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Read Table List data').output",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(activity('Read Table List data').output.flag,'Y')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter flag Y",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter flag Y').output",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 10
+							}
+						}
+					]
+				}
+			}
+		],
+		"annotations": []
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"name": "AzureSqlTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "table_name",
+				"type": "char"
+			},
+			{
+				"name": "flag",
+				"type": "char"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "table_list"
+		}
+	}
+}
