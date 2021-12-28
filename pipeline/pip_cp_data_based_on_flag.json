@@ -28,7 +28,7 @@
 				}
 			},
 			{
-				"name": "Filter1",
+				"name": "Filter Y Record",
 				"type": "Filter",
 				"dependsOn": [
 					{
@@ -48,6 +48,36 @@
 						"value": "@equals(item().flag,'Y')",
 						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Filter Y Record",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Filter Y Record').output.Value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 10
+							}
+						}
+					]
 				}
 			}
 		],
