@@ -7,9 +7,21 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "training-bitwise-pipeline"
 		},
+		"CosmosDb_Emp_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'CosmosDb_Emp'"
+		},
 		"TrainingBitwiseBlobStorage_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TrainingBitwiseBlobStorage'"
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"LinkedServiceBlobAssignment_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LinkedServiceBlobAssignment'"
 		},
 		"SqlServerOnPrem_connectionString": {
 			"type": "secureString",
@@ -28,6 +40,19 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/CosmosDb_Emp')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "CosmosDb",
+				"typeProperties": {
+					"connectionString": "[parameters('CosmosDb_Emp_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TrainingBitwiseBlobStorage')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -50,6 +75,52 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LinkedServiceBlobAssignment')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LinkedServiceBlobAssignment_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Write_CosmosDb_SqlApi_Db_employee')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "CosmosDb_Emp",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "CosmosDbSqlApiCollection",
+				"schema": {},
+				"typeProperties": {
+					"collectionName": "db_emp_dtl"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/CosmosDb_Emp')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/read_csv_file')]",
@@ -103,6 +174,80 @@
 					"quoteChar": "\""
 				},
 				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/read_emp_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "emp_data.xlsx",
+						"container": "file-input"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "First Name",
+						"type": "String"
+					},
+					{
+						"name": "Last Name",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/read_status_xlsx')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "TrainingBitwiseBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "processing_status.xlsx",
+						"container": "file-input"
+					}
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
 					{
 						"type": "String"
 					}
@@ -189,77 +334,60 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/read_status_xlsx')]",
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "TrainingBitwiseBlobStorage",
+					"referenceName": "AzureSqlDatabase1",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Excel",
+				"type": "AzureSqlTable",
+				"schema": [],
 				"typeProperties": {
-					"sheetName": "Sheet1",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "processing_status.xlsx",
-						"container": "file-input"
-					}
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
+					"schema": "dbo",
+					"table": "@pipeline().parameters.TableName"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/read_emp_data')]",
+			"name": "[concat(parameters('factoryName'), '/ControlFileReadParmater')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "TrainingBitwiseBlobStorage",
+					"referenceName": "LinkedServiceBlobAssignment",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Excel",
+				"type": "DelimitedText",
 				"typeProperties": {
-					"sheetName": "Sheet1",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "emp_data.xlsx",
-						"container": "file-input"
+						"container": "test-data"
 					},
-					"firstRowAsHeader": true
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "ID",
 						"type": "String"
 					},
 					{
-						"name": "First Name",
 						"type": "String"
 					},
 					{
-						"name": "Last Name",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TrainingBitwiseBlobStorage')]"
+				"[concat(variables('factoryId'), '/linkedServices/LinkedServiceBlobAssignment')]"
 			]
 		},
 		{
@@ -505,6 +633,7 @@
 							],
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
 								"enablePartitionDiscovery": false
 							},
 							"formatSettings": {
@@ -697,6 +826,66 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/read_status_xlsx')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pip5_CosmosDB_excel')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "CosmosDbSqlApiSink",
+								"writeBehavior": "insert"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "read_emp_data",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Write_CosmosDb_SqlApi_Db_employee",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/read_emp_data')]",
+				"[concat(variables('factoryId'), '/datasets/Write_CosmosDb_SqlApi_Db_employee')]"
 			]
 		}
 	]
