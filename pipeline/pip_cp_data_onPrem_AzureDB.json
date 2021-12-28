@@ -51,7 +51,8 @@
 		],
 		"parameters": {
 			"Table-Name": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "CUST_DTL"
 			}
 		},
 		"annotations": []
