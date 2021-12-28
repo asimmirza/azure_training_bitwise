@@ -23,11 +23,12 @@
 					"dataset": {
 						"referenceName": "AzureSqlTable2",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "Filter flag Y",
+				"name": "Filter1",
 				"type": "Filter",
 				"dependsOn": [
 					{
@@ -44,39 +45,9 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@equals(activity('Read Table List data').output.value.flag,'Y')",
+						"value": "@equals(activity('Read Table List data').output.flag,'Y')",
 						"type": "Expression"
 					}
-				}
-			},
-			{
-				"name": "ForEach1",
-				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "Filter flag Y",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Filter flag Y').output",
-						"type": "Expression"
-					},
-					"activities": [
-						{
-							"name": "Wait1",
-							"type": "Wait",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"waitTimeInSeconds": 10
-							}
-						}
-					]
 				}
 			}
 		],
