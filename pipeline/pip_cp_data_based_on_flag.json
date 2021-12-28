@@ -40,11 +40,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Read Table List data').output",
+						"value": "@activity('Read Table List data').output.value",
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@equals(activity('Read Table List data').output.flag,'Y')",
+						"value": "@equals(activity('Read Table List data').output.value.flag,'Y')",
 						"type": "Expression"
 					}
 				}
