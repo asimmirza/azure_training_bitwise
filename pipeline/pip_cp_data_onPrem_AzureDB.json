@@ -50,7 +50,7 @@
 			}
 		],
 		"parameters": {
-			"Table-Name": {
+			"TableName": {
 				"type": "string",
 				"defaultValue": "CUST_DTL"
 			}
