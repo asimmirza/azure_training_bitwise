@@ -7,9 +7,17 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "training-bitwise-pipeline"
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
 		"CosmosDb_Emp_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'CosmosDb_Emp'"
+		},
+		"LinkedServiceBlobAssignment_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LinkedServiceBlobAssignment'"
 		},
 		"SqlServerOnPrem_connectionString": {
 			"type": "secureString",
@@ -22,14 +30,6 @@
 		"TrainingBitwiseBlobStorage_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'TrainingBitwiseBlobStorage'"
-		},
-		"AzureSqlDatabase1_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
-		},
-		"LinkedServiceBlobAssignment_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LinkedServiceBlobAssignment'"
 		},
 		"SqlServerOnPrem_properties_typeProperties_userName": {
 			"type": "string",
@@ -62,17 +62,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"CosmosDb_Emp_connectionString": {
-						"value": "[parameters('CosmosDb_Emp_connectionString')]"
-					},
-					"TrainingBitwiseBlobStorage_connectionString": {
-						"value": "[parameters('TrainingBitwiseBlobStorage_connectionString')]"
-					},
 					"AzureSqlDatabase1_connectionString": {
 						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
 					},
+					"CosmosDb_Emp_connectionString": {
+						"value": "[parameters('CosmosDb_Emp_connectionString')]"
+					},
 					"LinkedServiceBlobAssignment_connectionString": {
 						"value": "[parameters('LinkedServiceBlobAssignment_connectionString')]"
+					},
+					"TrainingBitwiseBlobStorage_connectionString": {
+						"value": "[parameters('TrainingBitwiseBlobStorage_connectionString')]"
 					},
 					"SqlServerOnPrem_connectionString": {
 						"value": "[parameters('SqlServerOnPrem_connectionString')]"

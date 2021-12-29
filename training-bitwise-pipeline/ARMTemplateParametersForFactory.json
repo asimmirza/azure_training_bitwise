@@ -5,7 +5,13 @@
 		"factoryName": {
 			"value": "training-bitwise-pipeline"
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
 		"CosmosDb_Emp_connectionString": {
+			"value": ""
+		},
+		"LinkedServiceBlobAssignment_connectionString": {
 			"value": ""
 		},
 		"SqlServerOnPrem_connectionString": {
@@ -15,12 +21,6 @@
 			"value": ""
 		},
 		"TrainingBitwiseBlobStorage_connectionString": {
-			"value": ""
-		},
-		"AzureSqlDatabase1_connectionString": {
-			"value": ""
-		},
-		"LinkedServiceBlobAssignment_connectionString": {
 			"value": ""
 		},
 		"SqlServerOnPrem_properties_typeProperties_userName": {
