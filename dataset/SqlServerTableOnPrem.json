@@ -1,0 +1,40 @@
+{
+	"name": "SqlServerTableOnPrem",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServerOnPrem",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CITY",
+				"type": "char"
+			},
+			{
+				"name": "STATE",
+				"type": "char"
+			},
+			{
+				"name": "LAT_N",
+				"type": "real",
+				"precision": 7
+			},
+			{
+				"name": "LONG_W",
+				"type": "real",
+				"precision": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": ""
+		}
+	}
+}
