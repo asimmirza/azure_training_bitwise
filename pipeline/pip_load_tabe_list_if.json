@@ -19,7 +19,9 @@
 						"referenceName": "Check_CSV_file_for_load",
 						"type": "DatasetReference"
 					},
-					"fieldList": [],
+					"fieldList": [
+						"exists"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"enablePartitionDiscovery": false
