@@ -26,6 +26,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sinkInsert"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable7",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -37,9 +44,21 @@
 				},
 				{
 					"name": "Lookup1"
+				},
+				{
+					"name": "Filter1"
+				},
+				{
+					"name": "Select2"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "AlterRow1"
 				}
 			],
-			"script": "source(output(\n\t\tcust_id as string,\n\t\tcust_name as string,\n\t\tlocation as string,\n\t\tpin_code as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ReadCSVFile\nsource(output(\n\t\tuid as integer,\n\t\tcust_id as string,\n\t\tlocation as string,\n\t\tpin_code as integer,\n\t\tmost_recent_ind as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nReadCSVFile derive(most_recent_ind = 'Y') ~> AddNewColumn\nsource1 select(mapColumn(\n\t\tTS_uid = uid,\n\t\tTS_cust_id = cust_id,\n\t\tTS_location = location,\n\t\tTS_pin_code = pin_code,\n\t\tTS_most_recent_ind = most_recent_ind\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nReadCSVFile, Select1 lookup(cust_id == TS_cust_id,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nAddNewColumn sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sinkInsert"
+			"script": "source(output(\n\t\tcust_id as string,\n\t\tcust_name as string,\n\t\tlocation as string,\n\t\tpin_code as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ReadCSVFile\nsource(output(\n\t\tuid as integer,\n\t\tcust_id as string,\n\t\tlocation as string,\n\t\tpin_code as integer,\n\t\tmost_recent_ind as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nReadCSVFile derive(most_recent_ind = 'Y') ~> AddNewColumn\nsource1 select(mapColumn(\n\t\tTS_uid = uid,\n\t\tTS_cust_id = cust_id,\n\t\tTS_location = location,\n\t\tTS_pin_code = pin_code,\n\t\tTS_most_recent_ind = most_recent_ind\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nReadCSVFile, Select1 lookup(cust_id == TS_cust_id,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nLookup1 filter(!isNull(TS_cust_id)) ~> Filter1\nFilter1 select(mapColumn(\n\t\tuid = TS_uid,\n\t\tcust_id = TS_cust_id,\n\t\tlocation = TS_location,\n\t\tpin_code = TS_pin_code,\n\t\tmost_recent_ind = TS_most_recent_ind\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nSelect2 derive(most_recent_ind = 'N') ~> DerivedColumn1\nDerivedColumn1 alterRow(updateIf(true())) ~> AlterRow1\nAddNewColumn sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sinkInsert\nAlterRow1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['uid','cust_id'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
