@@ -30,7 +30,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "@item().Value.table_name"
+			"table": "@item().table_name"
 		}
 	}
 }
