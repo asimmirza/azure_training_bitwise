@@ -34,7 +34,10 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "@item().table_name"
+			"table": {
+				"value": "@trim(item().table_name)",
+				"type": "Expression"
+			}
 		}
 	}
 }
