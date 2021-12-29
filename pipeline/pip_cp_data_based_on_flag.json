@@ -51,7 +51,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "Copy Data into Table",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -69,7 +69,7 @@
 					},
 					"activities": [
 						{
-							"name": "Wait1",
+							"name": "Wait for 10 seconds",
 							"type": "Wait",
 							"dependsOn": [],
 							"userProperties": [],
