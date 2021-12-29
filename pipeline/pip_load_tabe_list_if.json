@@ -48,6 +48,17 @@
 						"value": "@equals(activity('Check if file present').output.exist,true)",
 						"type": "Expression"
 					},
+					"ifFalseActivities": [
+						{
+							"name": "Wait for 10 seconds",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 10
+							}
+						}
+					],
 					"ifTrueActivities": [
 						{
 							"name": "Wait for 5 seconds",
