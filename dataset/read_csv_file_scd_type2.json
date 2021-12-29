@@ -1,0 +1,23 @@
+{
+	"name": "read_csv_file_scd_type2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LinkedServiceBlobAssignment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Updated_CUST_DTL_type2.csv",
+				"container": "test-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
