@@ -1,0 +1,26 @@
+{
+	"name": "Trig_1",
+	"properties": {
+		"annotations": [
+			"dummy_pip_1"
+		],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Dummy_pipeline_1",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2021-12-29T12:25:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
