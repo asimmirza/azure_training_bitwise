@@ -1,0 +1,29 @@
+{
+	"name": "Check_CSV_file_for_load",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LinkedServiceBlobAssignment",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "table_list_load.csv",
+				"container": "test-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
