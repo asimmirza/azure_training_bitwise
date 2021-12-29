@@ -1,0 +1,39 @@
+{
+	"name": "AzureSqlTable8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "uid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cust_id",
+				"type": "varchar"
+			},
+			{
+				"name": "location",
+				"type": "varchar"
+			},
+			{
+				"name": "pin_code",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "most_recent_ind",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "CUST_DTL_TYPE2"
+		}
+	}
+}
