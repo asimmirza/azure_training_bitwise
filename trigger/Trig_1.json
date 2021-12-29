@@ -4,7 +4,7 @@
 		"annotations": [
 			"dummy_pip_1"
 		],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
