@@ -34,7 +34,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "@item().table_name"
+			"table": " @trim(item().table_name)"
 		}
 	}
 }
