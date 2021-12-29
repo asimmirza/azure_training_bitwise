@@ -1,0 +1,24 @@
+{
+	"name": "df_scd_type1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Read_CSV_file_SCD_Type1",
+						"type": "DatasetReference"
+					},
+					"name": "ReadFiles"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "AlterRow1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> ReadFiles\nReadFiles alterRow(updateIf(1==1)) ~> AlterRow1"
+		}
+	}
+}
