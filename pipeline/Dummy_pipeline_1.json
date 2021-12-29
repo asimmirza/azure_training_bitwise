@@ -1,0 +1,17 @@
+{
+	"name": "Dummy_pipeline_1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Wait for 10 second",
+				"type": "Wait",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitTimeInSeconds": 10
+				}
+			}
+		],
+		"annotations": []
+	}
+}
