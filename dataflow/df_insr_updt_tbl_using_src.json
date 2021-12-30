@@ -1,0 +1,12 @@
+{
+	"name": "df_insr_updt_tbl_using_src",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [],
+			"script": ""
+		}
+	}
+}
