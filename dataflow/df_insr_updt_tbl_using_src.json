@@ -6,7 +6,7 @@
 			"sources": [],
 			"sinks": [],
 			"transformations": [],
-			"script": ""
+			"script": "parameters{\n\tSource_Schema_Name as string ('dbo'),\n\tTarget_Schema_Name as string ('dbo'),\n\tSource_Table_Name as string ('CUST_DTL'),\n\tTarget_Table_Name as string ('CUST_DTL_TYPE2'),\n\tSource_Query as string ('SELECT  * FROM dbo.CUST_DTL')\n}"
 		}
 	}
 }
